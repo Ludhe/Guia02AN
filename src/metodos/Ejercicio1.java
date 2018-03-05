@@ -19,40 +19,48 @@ public class Ejercicio1 {
     public Ejercicio1() {
     }
     
-    public DefaultTableModel biseccion(long x1, long xu, int cifras){
+    public DefaultTableModel biseccion(double x1, double xu, double cifras){
         
         modelo = new DefaultTableModel(new Object[]{"Iteracion", "X1", "Xu", "Xr", "F(x1)", "F(xr)", "F(x1)F(xr)","Error Aproximado"}, 0);
         
         double tolerancia;
-        long xr=0, errorAproximado;
-        if((((Math.exp(xu-1))-(1.5*xu)) * ((Math.exp(x1-1))-(1.5*x1))) < 0){
+        double xr=0, errorAproximado=1000;
+        if(evaluarFuncion(x1)*evaluarFuncion(xu) < 0){
+            int i=1;
+            tolerancia= 0.5*Math.pow(10, (2-cifras));
             
-            int i=0;
-            tolerancia= 0.5*Math.pow(10, 2-cifras);
+
             
             do {                
                 
                 xr=((x1+xu)/2);
                 
                 
+                if(i==1){
+                modelo.addRow(new Object[]{i, x1, xu, xr, evaluarFuncion(x1), evaluarFuncion(xr), (evaluarFuncion(xr)*evaluarFuncion(x1)), "---------"});    
+                }else{
+                    errorAproximado = (xr-Double.parseDouble(String.valueOf(modelo.getValueAt(modelo.getRowCount()-1, 3))));
+                    modelo.addRow(new Object[]{i+1, x1, xu, xr, evaluarFuncion(x1), evaluarFuncion(xr), (evaluarFuncion(xr)*evaluarFuncion(x1)), errorAproximado});
+                }
+                
             
-            if((((Math.exp(x1-1))-(1.5*x1)) * ((Math.exp(xr-1))-(1.5*xr))) < 0){
+            if(evaluarFuncion(x1)*evaluarFuncion(xr) < 0){
                 
                 xu=xr;
                 
-            }else if((((Math.exp(xu-1))-(1.5*xu)) * ((Math.exp(x1-1))-(1.5*x1))) > 0){
+            }else if(evaluarFuncion(x1)*evaluarFuncion(xr) > 0){
                 
                  x1=xr;
                 
             }else{
                 
-               return null;
+               return modelo;
                 
             }
             
-//            errorAproximado = 
+            i++;
                 
-            } while (Math.abs(errorAproximado)<tolerancia);
+            } while (Math.abs(errorAproximado)>tolerancia);
             
             
         }else{
@@ -60,7 +68,14 @@ public class Ejercicio1 {
             return null;
         }
         
-        return null;
+        return modelo;
+    }
+    
+    public double evaluarFuncion(double x){
+      
+        return (((Math.exp((x-1))))) - ((1.5*x));
+        
+        
     }
     
     

@@ -12,16 +12,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author doratt
  */
-public class Ejercicio1 {
+public class FalsaPosicion {
     
      DefaultTableModel modelo;
 
-    public Ejercicio1() {
+    public FalsaPosicion() {
     }
     
-    public DefaultTableModel biseccion(double x1, double xu, double cifras){
+    public DefaultTableModel falsaPosicion(double x1, double xu, double cifras){
         
-        modelo = new DefaultTableModel(new Object[]{"Iteracion", "X1", "Xu", "Xr", "F(x1)", "F(xr)", "F(x1)F(xr)","Error Aproximado"}, 0);
+        modelo = new DefaultTableModel(new Object[]{"Iteracion", "X1", "Xu","F(x1)","F(xu)", "Xr", "F(xr)", "F(x1)F(xr)","Error Aproximado"}, 0);
         double tolerancia;
         double xr=0, errorAproximado=1000;
         if(evaluarFuncion(x1)*evaluarFuncion(xu) < 0){
@@ -32,14 +32,14 @@ public class Ejercicio1 {
             
             do {                
                 
-                xr=((x1+xu)/2);
+                xr=(xu-(((evaluarFuncion(xu))*(x1-xu))/((evaluarFuncion(x1)-evaluarFuncion(xu)))));
                 
                 
                 if(i==1){
-                modelo.addRow(new Object[]{i, x1, xu, xr, evaluarFuncion(x1), evaluarFuncion(xr), (evaluarFuncion(xr)*evaluarFuncion(x1)), "---------"});    
+                modelo.addRow(new Object[]{i, x1, xu, evaluarFuncion(x1), evaluarFuncion(xu) ,xr , evaluarFuncion(xr) ,(evaluarFuncion(xr)*evaluarFuncion(x1)), "---------"});    
                 }else{
-                    errorAproximado = (xr-Double.parseDouble(String.valueOf(modelo.getValueAt(modelo.getRowCount()-1, 3))));
-                    modelo.addRow(new Object[]{i+1, x1, xu, xr, evaluarFuncion(x1), evaluarFuncion(xr), (evaluarFuncion(xr)*evaluarFuncion(x1)), errorAproximado});
+                    errorAproximado = (xr-Double.parseDouble(String.valueOf(modelo.getValueAt(modelo.getRowCount()-1, 5))));
+                    modelo.addRow(new Object[]{i, x1, xu, evaluarFuncion(x1), evaluarFuncion(xu) ,xr , evaluarFuncion(xr) ,(evaluarFuncion(xr)*evaluarFuncion(x1)), errorAproximado});    
                 }
                 
             
@@ -76,8 +76,5 @@ public class Ejercicio1 {
         
         
     }
-    
-    
-    
     
 }

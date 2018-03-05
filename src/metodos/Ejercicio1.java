@@ -22,7 +22,6 @@ public class Ejercicio1 {
     public DefaultTableModel biseccion(double x1, double xu, double cifras){
         
         modelo = new DefaultTableModel(new Object[]{"Iteracion", "X1", "Xu", "Xr", "F(x1)", "F(xr)", "F(x1)F(xr)","Error Aproximado"}, 0);
-        
         double tolerancia;
         double xr=0, errorAproximado=1000;
         if(evaluarFuncion(x1)*evaluarFuncion(xu) < 0){

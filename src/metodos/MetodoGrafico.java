@@ -23,7 +23,7 @@ import org.jfree.data.xy.XYSeriesCollection;
  *
  * @author villa
  */
-public class MetodoGrafico {
+public class MetodoGrafico extends Funciones{
 
     XYSeries serie1;
     XYSeriesCollection dataset;
@@ -32,17 +32,26 @@ public class MetodoGrafico {
     XYPlot plot;
     XYLineAndShapeRenderer render;
     Robot robot;
+    int valor;
 
     public MetodoGrafico() {
     }
 
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+    
     public ChartPanel graficar(double inicio, double fin) {
         serie1 = new XYSeries("funcion");
         dataset = new XYSeriesCollection();
         render = new XYLineAndShapeRenderer();
 
         for (double i = inicio; i <= fin; i += 0.1) {
-            serie1.add(i, funcion(i));
+            serie1.add(i, evaluarFuncion(i, getValor()));
         }
 
         dataset.addSeries(serie1);
@@ -86,9 +95,5 @@ public class MetodoGrafico {
         return panel;
     }
 
-    public double funcion(double i) {
-        return i*i;
-//        return (Math.exp(i - 1)) - (1.5 * i);
-    }
-    
+  
 }

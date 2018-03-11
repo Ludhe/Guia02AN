@@ -422,6 +422,7 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         } else if (Double.parseDouble(txtMin.getText())>Double.parseDouble(txtMax.getText())) {
             JOptionPane.showMessageDialog(null, "El limite inferior no puede ser mayor que el superior");
         } else {
+            grafico.setValor(jComboBox1.getSelectedIndex());
             pnlGraph.removeAll();
             pnlGraph.add(grafico.graficar(Double.parseDouble(String.valueOf(txtMin.getText())), Double.parseDouble(String.valueOf(txtMax.getText()))), BorderLayout.NORTH);
             this.revalidate();

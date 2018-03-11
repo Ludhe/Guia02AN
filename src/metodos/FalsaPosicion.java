@@ -7,6 +7,9 @@ package metodos;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.lsmp.djep.djep.DJep;
+import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
 
 /**
  *
@@ -18,6 +21,8 @@ public class FalsaPosicion {
 
     public FalsaPosicion() {
     }
+    
+    
     
     public DefaultTableModel falsaPosicion(double x1, double xu, double cifras){
         

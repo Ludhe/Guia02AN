@@ -5,8 +5,12 @@
  */
 package metodos;
 
+import java.util.function.Function;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.lsmp.djep.djep.DJep;
+import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
 
 /**
  *
@@ -15,9 +19,40 @@ import javax.swing.table.DefaultTableModel;
 public class Biseccion {
 
     DefaultTableModel modelo;
+    
+    
+    public String derivar(String funcion){
+       
+        String derivada="";
+        System.out.println(funcion);
+        DJep Derivar = new DJep();
+        System.out.println("Crea el DJEP");
+        Derivar.addStandardFunctions();
+        System.out.println("Añade funciones");
+        Derivar.addStandardConstants();
+        Derivar.addComplex();
+        Derivar.setAllowUndeclared(true);
+        Derivar.setAllowAssignment(true);
+        Derivar.setImplicitMul(true);
+        Derivar.addStandardDiffRules();
+        System.out.println("antes del try");
+        
+        try {
+            System.out.println("Entro al try");
+            Node node = Derivar.parse(funcion);
+            System.out.println("Parseo la funcion"+node.toString());
+            Node diff = Derivar.differentiate(node, "x");
+            Node sim = Derivar.simplify(diff);
+            derivada = Derivar.toString(sim);
+        } catch (ParseException e) {
+         Derivar.getErrorInfo();
+        }
+        
+        return derivada;
+    }
 
     public DefaultTableModel biseccion(double x1, double xu, double cifras) {
-
+        
         modelo = new DefaultTableModel(new Object[]{"Iteracion", "X1", "Xu", "Xr", "F(x1)", "F(xr)", "F(x1)F(xr)", "Error Aproximado"}, 0);
         double tolerancia;
         double xr = 0, errorAproximado = 1000;

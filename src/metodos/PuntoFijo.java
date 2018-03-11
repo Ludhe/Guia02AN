@@ -7,6 +7,9 @@ package metodos;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.lsmp.djep.djep.DJep;
+import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
 
 /**
  *
@@ -16,6 +19,36 @@ public class PuntoFijo {
 
     DefaultTableModel modelo;
 
+    public String derivar(String funcion){
+       
+        String derivada="";
+        System.out.println(funcion);
+        DJep Derivar = new DJep();
+        System.out.println("Crea el DJEP");
+        Derivar.addStandardFunctions();
+        System.out.println("Añade funciones");
+        Derivar.addStandardConstants();
+        Derivar.addComplex();
+        Derivar.setAllowUndeclared(true);
+        Derivar.setAllowAssignment(true);
+        Derivar.setImplicitMul(true);
+        Derivar.addStandardDiffRules();
+        System.out.println("antes del try");
+        
+        try {
+            System.out.println("Entro al try");
+            Node node = Derivar.parse(funcion);
+            System.out.println("Parseo la funcion"+node.toString());
+            Node diff = Derivar.differentiate(node, "x");
+            Node sim = Derivar.simplify(diff);
+            derivada = Derivar.toString(sim);
+        } catch (ParseException e) {
+         Derivar.getErrorInfo();
+        }
+        
+        return derivada;
+    }
+    
     public DefaultTableModel puntoFijo(double x0, int cifras) {
         modelo = new DefaultTableModel(new Object[]{"Iteracion", "Xn", "G(xn)", "Error Aproximado" }, 0);
         double tolerancia, errorAproximado = 1000, xn;

@@ -15,10 +15,18 @@ import org.nfunk.jep.ParseException;
  *
  * @author doratt
  */
-public class NewtonRaphson {
+public class NewtonRaphson extends Funciones{
 
     DefaultTableModel modelo;
-    
+    int funcion;
+
+    public int getFuncion() {
+        return funcion;
+    }
+
+    public void setFuncion(int funcion) {
+        this.funcion = funcion;
+    }
     
     public String derivar(String funcion){
        
@@ -49,18 +57,6 @@ public class NewtonRaphson {
         
         return derivada;
     }
-    
-    public double evaluarFuncion(double x) {
-        
-        return (((Math.exp((x - 1))))) - ((1.5 * x));
-        
-    }
-    
-    public double evaluarFuncionDerivada(double x) {
-        
-        return (((Math.exp((x - 1))))) - ((1.5));
-        
-    }
 
     public DefaultTableModel newtonRaphson(double x0, int cifras) {
         modelo = new DefaultTableModel(new Object[]{"Iteracion", "Xn", "Xi+1", "Error Aproximado" }, 0);
@@ -69,7 +65,7 @@ public class NewtonRaphson {
             double gx;
             tolerancia = 0.5 * Math.pow(10, (2 - cifras));
             do {      
-                gx=x0-(evaluarFuncion(x0)/evaluarFuncionDerivada(x0));
+                gx=x0-(evaluarFuncion(x0,getFuncion())/evaluarFuncionDerivada(x0,getFuncion()));
                 errorAproximado=(((gx-x0)/gx))*100;
                 modelo.addRow(new Object[]{i, x0, gx, errorAproximado});
                 x0=gx;

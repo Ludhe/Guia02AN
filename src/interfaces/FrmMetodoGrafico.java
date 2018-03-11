@@ -483,6 +483,7 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         if (jComboBox1.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione una funcion");
         } else {
+            nr.setFuncion(jComboBox1.getSelectedIndex());
             btnIteraciones.setEnabled(true);
             txtValor.setVisible(true);
             txtValor.setText(String.valueOf(Xo));
@@ -506,8 +507,8 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
                 txtCifras.setText("3");
                 Xo = Math.toRadians(-2.3562);
                 intervalo = "[-π,π]";
-                vi = Math.toRadians(-Math.PI);
-                vf = Math.toRadians(Math.PI);
+                vi = -Math.PI;
+                vf = Math.PI;
                 break;
             case 2:
                 txtCifras.setText("4");
@@ -537,6 +538,8 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         if (jComboBox1.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione una funcion");
         } else {
+            System.out.println(Xo);
+            pf.setFuncion(jComboBox1.getSelectedIndex());
             btnIteraciones.setEnabled(true);
             txtValor.setVisible(true);
             txtValor.setText(String.valueOf(Xo));

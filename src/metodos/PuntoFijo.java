@@ -15,10 +15,19 @@ import org.nfunk.jep.ParseException;
  *
  * @author doratt
  */
-public class PuntoFijo {
+public class PuntoFijo extends Funciones{
 
     DefaultTableModel modelo;
+    int funcion;
 
+    public int getFuncion() {
+        return funcion;
+    }
+
+    public void setFuncion(int funcion) {
+        this.funcion = funcion;
+    }
+    
     public String derivar(String funcion){
        
         String derivada="";
@@ -53,13 +62,14 @@ public class PuntoFijo {
         modelo = new DefaultTableModel(new Object[]{"Iteracion", "Xn", "G(xn)", "Error Aproximado" }, 0);
         double tolerancia, errorAproximado = 1000, xn;
         
-        if(evaluarFuncionDerivada(x0)<1){
+        if(evaluarFuncionDerivada(x0,getFuncion())<1){
             int i=1;
             tolerancia = 0.5 * Math.pow(10, (2 - cifras));
             do {         
-                errorAproximado=((evaluarFuncion(x0)-x0)/evaluarFuncion(x0))*100;
-                modelo.addRow(new Object[]{i, x0, evaluarFuncion(x0), errorAproximado});
-                x0=evaluarFuncion(x0);
+                errorAproximado=((evaluarFuncionDespejada(x0,getFuncion())-x0)/evaluarFuncionDespejada(x0,getFuncion()))*100;
+                System.out.println(errorAproximado);
+                modelo.addRow(new Object[]{i, x0, evaluarFuncionDespejada(x0,getFuncion()), errorAproximado});
+                x0=evaluarFuncionDespejada(x0,getFuncion());
                 i++;
                 
                 
@@ -73,17 +83,4 @@ public class PuntoFijo {
         
         return modelo;
     }
-
-    public double evaluarFuncion(double x) {
-
-        return ((Math.exp(x - 1)) / 1.5);
-
-    }
-
-    public double evaluarFuncionDerivada(double x) {
-
-        return ((Math.exp(x - 1)) / 1.5);
-
-    }
-
 }

@@ -90,4 +90,5 @@ public class MetodoGrafico {
         return i*i;
 //        return (Math.exp(i - 1)) - (1.5 * i);
     }
+    
 }

@@ -44,6 +44,7 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         modelo = new DefaultTableModel(new Object[]{"Iteración", "Xn", "Xi+1", "Error Aproximado"}, 0);
         tblDatos.setModel(modelo);
         txtValor.setVisible(false);
+        btnIteraciones.setEnabled(false);
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -79,7 +80,7 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         btnNewton = new javax.swing.JButton();
         pnlFuncion = new javax.swing.JPanel();
         txtMin = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnGraficar = new javax.swing.JButton();
         txtMax = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -88,16 +89,16 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         txtRaiz = new javax.swing.JTextField();
         txtError = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        btnIteraciones = new javax.swing.JButton();
         txtCifras = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         lblVaor = new javax.swing.JLabel();
         txtValor = new javax.swing.JTextField();
-        pnlGraph = new javax.swing.JPanel();
         pnlTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDatos = new javax.swing.JTable();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        bntSalir = new javax.swing.JToggleButton();
+        pnlGraph = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -206,12 +207,12 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Graficar");
-        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGraficar.setBackground(new java.awt.Color(255, 255, 255));
+        btnGraficar.setText("Graficar");
+        btnGraficar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnGraficar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGraficarActionPerformed(evt);
             }
         });
 
@@ -222,9 +223,9 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setBackground(new java.awt.Color(0, 0, 0));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "e^(x-1) - 1.5x", "2senx = x", "e^x - 4 = 0", "e^-(x-1) senx = 1", "4senx = e^x" }));
         jComboBox1.setSelectedIndex(-1);
+        jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jComboBox1.setOpaque(false);
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -247,10 +248,10 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
 
         jLabel7.setText("Error:");
 
-        jButton6.setText("Ver iteraciones");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnIteraciones.setText("Ver iteraciones");
+        btnIteraciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnIteracionesActionPerformed(evt);
             }
         });
 
@@ -303,8 +304,8 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, Short.MAX_VALUE)))
                 .addGroup(pnlFuncionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnIteraciones)
+                    .addComponent(btnGraficar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlFuncionLayout.setVerticalGroup(
@@ -313,7 +314,7 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlFuncionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnGraficar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnlFuncionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFuncionLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
@@ -342,11 +343,57 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
                         .addGroup(pnlFuncionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtRaiz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtError, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton6))
+                    .addComponent(btnIteraciones))
                 .addGap(28, 28, 28))
         );
 
         pnlMetodos.add(pnlFuncion, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 810, 197));
+
+        pnlTabla.setBackground(new java.awt.Color(102, 102, 102));
+
+        tblDatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDatos);
+
+        bntSalir.setText("X");
+        bntSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntSalirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlTablaLayout = new javax.swing.GroupLayout(pnlTabla);
+        pnlTabla.setLayout(pnlTablaLayout);
+        pnlTablaLayout.setHorizontalGroup(
+            pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlTablaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTablaLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(bntSalir)))
+                .addContainerGap())
+        );
+        pnlTablaLayout.setVerticalGroup(
+            pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTablaLayout.createSequentialGroup()
+                .addComponent(bntSalir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(327, 327, 327))
+        );
+
+        pnlMetodos.add(pnlTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, 220));
 
         getContentPane().add(pnlMetodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 436, 1012, 250));
 
@@ -366,56 +413,10 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
 
         getContentPane().add(pnlGraph, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1000, 436));
 
-        pnlTabla.setBackground(new java.awt.Color(102, 102, 102));
-
-        tblDatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblDatos);
-
-        jToggleButton1.setText("X");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlTablaLayout = new javax.swing.GroupLayout(pnlTabla);
-        pnlTabla.setLayout(pnlTablaLayout);
-        pnlTablaLayout.setHorizontalGroup(
-            pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTablaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTablaLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jToggleButton1)))
-                .addContainerGap())
-        );
-        pnlTablaLayout.setVerticalGroup(
-            pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTablaLayout.createSequentialGroup()
-                .addComponent(jToggleButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        getContentPane().add(pnlTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, 480, 540));
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarActionPerformed
         if (txtMin.getText().isEmpty() || txtMax.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese valores faltantes.");
         } else if (Double.parseDouble(txtMin.getText())>Double.parseDouble(txtMax.getText())) {
@@ -426,12 +427,13 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
             this.revalidate();
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnGraficarActionPerformed
 
     private void btnBiseccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBiseccionActionPerformed
         if (jComboBox1.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione una funcion");
         } else {
+            btnIteraciones.setEnabled(true);
             txtValor.setVisible(true);
             txtValor.setText(intervalo);
             lblVaor.setText("Intervalo:");
@@ -445,6 +447,7 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         if (jComboBox1.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione una funcion");
         } else {
+            btnIteraciones.setEnabled(true);
             txtValor.setVisible(true);
             txtValor.setText(intervalo);
             lblVaor.setText("Intervalo:");
@@ -463,18 +466,23 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pnlMetodosMouseMoved
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    private void bntSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalirActionPerformed
         pnlTabla.show(false);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+        pnlFuncion.show();
+        jLabel3.setVisible(true);
+    }//GEN-LAST:event_bntSalirActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnIteracionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIteracionesActionPerformed
+        pnlFuncion.show(false);
         pnlTabla.show();
-    }//GEN-LAST:event_jButton6ActionPerformed
+        jLabel3.setVisible(false);
+    }//GEN-LAST:event_btnIteracionesActionPerformed
 
     private void btnNewtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewtonActionPerformed
         if (jComboBox1.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione una funcion");
         } else {
+            btnIteraciones.setEnabled(true);
             txtValor.setVisible(true);
             txtValor.setText(String.valueOf(Xo));
             lblVaor.setText("Valor inicial:");
@@ -528,6 +536,7 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         if (jComboBox1.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione una funcion");
         } else {
+            btnIteraciones.setEnabled(true);
             txtValor.setVisible(true);
             txtValor.setText(String.valueOf(Xo));
             lblVaor.setText("Valor inicial:");
@@ -594,12 +603,13 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton bntSalir;
     private javax.swing.JButton btnBiseccion;
     private javax.swing.JButton btnFalsaPosicion;
+    private javax.swing.JButton btnGraficar;
+    private javax.swing.JButton btnIteraciones;
     private javax.swing.JButton btnNewton;
     private javax.swing.JButton btnPuntoFijo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -609,7 +619,6 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblVaor;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlFuncion;

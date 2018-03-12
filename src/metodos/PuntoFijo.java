@@ -62,20 +62,15 @@ public class PuntoFijo extends Funciones{
         modelo = new DefaultTableModel(new Object[]{"Iteracion", "Xn", "G(xn)", "Error Aproximado" }, 0);
         double tolerancia, errorAproximado = 1000, xn;
         
-        if(evaluarFuncionDerivada(x0,getFuncion())<1){
+        if(Math.abs(evaluarFuncionDespejadaDerivada(x0,getFuncion()))<1){
             int i=1;
             tolerancia = 0.5 * Math.pow(10, (2 - cifras));
             do {         
                 errorAproximado=((evaluarFuncionDespejada(x0,getFuncion())-x0)/evaluarFuncionDespejada(x0,getFuncion()))*100;
-                System.out.println(errorAproximado);
                 modelo.addRow(new Object[]{i, x0, evaluarFuncionDespejada(x0,getFuncion()), errorAproximado});
                 x0=evaluarFuncionDespejada(x0,getFuncion());
                 i++;
-                
-                
             } while (Math.abs(errorAproximado)>tolerancia);
-            
-            
         }else{
             JOptionPane.showMessageDialog(null, "No existe raíz");
         }

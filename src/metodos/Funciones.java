@@ -39,9 +39,9 @@ public class Funciones {
             case 1:
                 return Math.asin(x/2);
             case 2:
-                return Math.log10(4);
+                return Math.log(4);
             case 3:
-                return Math.asin(Math.exp(x-1));
+                return Math.asin(1/(Math.exp(1-x)));
             case 4:
                 return Math.asin((Math.exp(x))/4);
             default:
@@ -49,7 +49,7 @@ public class Funciones {
         }
     }
     
-    public double evaluarFuncionDerivada(double x, int funcion) {
+    public double evaluarFuncionDespejadaDerivada(double x, int funcion) {
         switch (funcion) {
             case 0:
                 return ((Math.exp(x - 1)) / 1.5);
@@ -58,9 +58,26 @@ public class Funciones {
             case 2:
                 return 0;
             case 3:
-                return Math.exp(x-1)/Math.sqrt(1-Math.exp(2*x-2));
+                return 1/Math.sqrt((Math.exp(2-(2*x)))-1);
             case 4:
                 return Math.exp(x)/Math.sqrt(16-Math.exp(2*x));
+            default:
+                return 0.0;
+        }
+    }
+    
+    public double evaluarFuncionDerivada(double x, int funcion) {
+        switch (funcion) {
+            case 0:
+                return ((Math.exp(x - 1)) - 1.5);
+            case 1:
+                return (2*Math.cos(x))-1;
+            case 2:
+                return Math.exp(x);
+            case 3:
+                return (Math.exp(1-x)*Math.cos(x))-(Math.exp(1-x)*Math.sin(x));
+            case 4:
+                return (4*Math.cos(x))-Math.exp(x);
             default:
                 return 0.0;
         }

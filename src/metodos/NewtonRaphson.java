@@ -77,4 +77,16 @@ public class NewtonRaphson extends Funciones{
         return modelo;
     }
     
+//    public double evaluarFuncion(double x) {
+//        
+//        return (((Math.exp((x - 1))))) - ((1.5 * x));
+//        
+//    }
+//    
+//    public double evaluarFuncionDerivada(double x) {
+//        
+//        return (((Math.exp((x - 1))))) - ((1.5));
+//        
+//    }
+    
 }

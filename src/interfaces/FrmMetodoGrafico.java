@@ -32,7 +32,7 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
     FalsaPosicion fp = new FalsaPosicion();
     DefaultTableModel modelo;
     Robot robot;
-    double Xo, vi, vf;
+    double Xo, vi, vf, XoRad;
     String intervalo;
 
     public FrmMetodoGrafico() {
@@ -404,14 +404,14 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         pnlGraph.setLayout(pnlGraphLayout);
         pnlGraphLayout.setHorizontalGroup(
             pnlGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGap(0, 1010, Short.MAX_VALUE)
         );
         pnlGraphLayout.setVerticalGroup(
             pnlGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 436, Short.MAX_VALUE)
         );
 
-        getContentPane().add(pnlGraph, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1000, 436));
+        getContentPane().add(pnlGraph, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1010, 436));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -419,7 +419,7 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
     private void btnGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarActionPerformed
         if (txtMin.getText().isEmpty() || txtMax.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese valores faltantes.");
-        } else if (Double.parseDouble(txtMin.getText())>Double.parseDouble(txtMax.getText())) {
+        } else if (Double.parseDouble(txtMin.getText()) > Double.parseDouble(txtMax.getText())) {
             JOptionPane.showMessageDialog(null, "El limite inferior no puede ser mayor que el superior");
         } else {
             grafico.setValor(jComboBox1.getSelectedIndex());
@@ -434,13 +434,23 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         if (jComboBox1.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione una funcion");
         } else {
+            bi.setFuncion(jComboBox1.getSelectedIndex());
             btnIteraciones.setEnabled(true);
             txtValor.setVisible(true);
             txtValor.setText(intervalo);
             lblVaor.setText("Intervalo:");
             tblDatos.setModel(bi.biseccion(Double.parseDouble(String.valueOf(vi)), Double.parseDouble(String.valueOf(vf)), Integer.parseInt(txtCifras.getText())));
-            txtRaiz.setText(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 3)));
-            txtError.setText(String.valueOf(Math.abs(Double.parseDouble(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 7))))));
+            if (tblDatos.getRowCount() <= 0) {
+                txtRaiz.setText("N/A");
+                txtError.setText("N/A");
+            } else {
+                if (String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 7)).equals("---------")) {
+                    txtError.setText("N/A");
+                } else {
+                    txtError.setText(String.valueOf(Math.abs(Double.parseDouble(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 7))))));
+                }
+                txtRaiz.setText(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 3)));
+            }
         }
     }//GEN-LAST:event_btnBiseccionActionPerformed
 
@@ -448,13 +458,23 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         if (jComboBox1.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione una funcion");
         } else {
+            fp.setFuncion(jComboBox1.getSelectedIndex());
             btnIteraciones.setEnabled(true);
             txtValor.setVisible(true);
             txtValor.setText(intervalo);
             lblVaor.setText("Intervalo:");
             tblDatos.setModel(fp.falsaPosicion(Double.parseDouble(String.valueOf(vi)), Double.parseDouble(String.valueOf(vf)), Integer.parseInt(txtCifras.getText())));
-            txtRaiz.setText(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 3)));
-            txtError.setText(String.valueOf(Math.abs(Double.parseDouble(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 7))))));
+            if (tblDatos.getRowCount() <= 0) {
+                txtRaiz.setText("N/A");
+                txtError.setText("N/A");
+            } else {
+                if (String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 8)).equals("---------")) {
+                    txtError.setText("N/A");
+                } else {
+                    txtError.setText(String.valueOf(Math.abs(Double.parseDouble(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 8))))));
+                }
+                txtRaiz.setText(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 5)));
+            }
         }
     }//GEN-LAST:event_btnFalsaPosicionActionPerformed
 
@@ -488,7 +508,7 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
             txtValor.setVisible(true);
             txtValor.setText(String.valueOf(Xo));
             lblVaor.setText("Valor inicial:");
-            tblDatos.setModel(nr.newtonRaphson(Double.parseDouble(txtValor.getText()), Integer.parseInt(txtCifras.getText())));
+            tblDatos.setModel(nr.newtonRaphson(XoRad, Integer.parseInt(txtCifras.getText())));
             txtRaiz.setText(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 1)));
             txtError.setText(String.valueOf(Math.abs(Double.parseDouble(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 3))))));
         }
@@ -499,13 +519,15 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
             case 0:
                 txtCifras.setText("7");
                 Xo = 0;
+                XoRad = 0;
                 intervalo = "[0,1]";
                 vi = 0;
                 vf = 1;
                 break;
             case 1:
                 txtCifras.setText("3");
-                Xo = Math.toRadians(-2.3562);
+                Xo = -2.3562;
+                XoRad = Math.toRadians(-2.3562);
                 intervalo = "[-π,π]";
                 vi = -Math.PI;
                 vf = Math.PI;
@@ -513,24 +535,28 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
             case 2:
                 txtCifras.setText("4");
                 Xo = 1.5;
+                XoRad = 1.5;
                 intervalo = "[1,2]";
                 vi = 1;
                 vf = 2;
                 break;
             case 3:
                 txtCifras.setText("3");
-                Xo = Math.toRadians(-0.5);
+                Xo = -0.5;
+                XoRad = Math.toRadians(-0.5);
                 intervalo = "[-1,0]";
-                vi = Math.toRadians(-1);
-                vf = Math.toRadians(0);
+                vi = -1;
+                vf = 0;
                 break;
             case 4:
                 txtCifras.setText("4");
                 Xo = 0.1;
+                XoRad = 0.1;
                 intervalo = "[0,0.5]rad";
                 vi = 0;
                 vf = 0.5;
                 break;
+
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
@@ -538,13 +564,12 @@ public class FrmMetodoGrafico extends javax.swing.JFrame {
         if (jComboBox1.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione una funcion");
         } else {
-            System.out.println(Xo);
             pf.setFuncion(jComboBox1.getSelectedIndex());
             btnIteraciones.setEnabled(true);
             txtValor.setVisible(true);
             txtValor.setText(String.valueOf(Xo));
             lblVaor.setText("Valor inicial:");
-            tblDatos.setModel(pf.puntoFijo(Double.parseDouble(txtValor.getText()), Integer.parseInt(txtCifras.getText())));
+            tblDatos.setModel(pf.puntoFijo(XoRad, Integer.parseInt(txtCifras.getText())));
             txtRaiz.setText(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 1)));
             txtError.setText(String.valueOf(Math.abs(Double.parseDouble(String.valueOf(tblDatos.getValueAt(tblDatos.getRowCount() - 1, 3))))));
         }
